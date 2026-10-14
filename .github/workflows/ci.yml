@@ -1,16 +1,37 @@
 name: ci
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - uses: astral-sh/setup-uv@v5
-      - run: npm ci --prefix web-app
-      - run: npm --prefix web-app run typecheck
-      - run: npm --prefix web-app test
-      - run: npm --prefix web-app run build:ui
-      - run: uv sync --directory mcp-server
-      - run: uv run --directory mcp-server pytest -q
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web-app/package-lock.json
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Check the repository layout
+        run: |
+          for f in web-app/package.json web-app/package-lock.json mcp-server/pyproject.toml mcp-server/uv.lock; do
+            test -f "$f" || { echo "::error::missing $f (the repo root must be the folder that contains web-app/ and mcp-server/)"; exit 1; }
+          done
+
+      - name: Install window dependencies
+        run: npm ci --prefix web-app
+      - name: Typecheck
+        run: npm --prefix web-app run typecheck
+      - name: Window unit tests
+        run: npm --prefix web-app test
+      - name: Build the window
+        run: npm --prefix web-app run build:ui
+
+      - name: Install server dependencies
+        run: uv sync --directory mcp-server
+      - name: Server tests
+        run: uv run --directory mcp-server pytest -q
