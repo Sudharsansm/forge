@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.venv/
+.venv-test/
+__pycache__/
+*.pyc
+projects/
+.forge/
+.env
+ui-shots/
+dist-host/
+mcp-server/ui-shots/

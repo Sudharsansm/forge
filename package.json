@@ -1,0 +1,19 @@
+{
+  "name": "forge",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Bitsophia Forge: AI app builder with MCP server, live code view, preview and visual editing",
+  "scripts": {
+    "dev:api": "uv run --directory mcp-server forge-server",
+    "dev:web": "npm run dev --prefix web-app",
+    "dev": "concurrently -n api,web -c magenta,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "install:all": "npm install --prefix web-app && uv sync --directory mcp-server",
+    "test": "uv run --directory mcp-server pytest",
+    "inspect": "uv run --directory mcp-server mcp dev server.py",
+    "build:ui": "npm run build:ui --prefix web-app",
+    "build:host": "npm run build:host --prefix web-app"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}

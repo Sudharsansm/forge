@@ -1,0 +1,15 @@
+# UNTESTED. Run:  FORGE_API_KEY=change-me docker compose up --build   then open http://localhost:8000/ui
+# Nothing is stored: projects live in the server's memory only and apps are compiled in the browser window, so there are no volumes,
+# no npm and no extra ports.
+services:
+  forge:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      FORGE_API_KEY: ${FORGE_API_KEY:?set FORGE_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    read_only: true
+    mem_limit: 1g
+    cpus: 1
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]

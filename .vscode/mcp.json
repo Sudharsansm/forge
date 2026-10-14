@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "bitsophia-forge": {
+      "type": "http",
+      "url": "http://127.0.0.1:8000/mcp"
+    },
+    "bitsophia-forge-stdio": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["--directory", "mcp-server", "run", "server.py"],
+      "env": { "FORGE_API_URL": "http://127.0.0.1:8000" }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+node_modules
+**/node_modules
+.venv
+**/.venv
+projects
+.git
+**/dist
+ui-shots
+docs-shots
