@@ -1,4 +1,4 @@
-# Bitsophia Forge  ·  v0.2.0
+# Bitsophia Forge  ·  v0.1.0
 
 A **Lovable-style workbench delivered through MCP.** Connect Forge to any MCP client that supports
 **MCP Apps** (the `ui://` extension, spec 2026-01-26), ask the AI to build an app, and a window appears
