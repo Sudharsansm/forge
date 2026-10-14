@@ -87,7 +87,7 @@ def test_export_single_file_folder_and_project_through_a_session():
             assert whole["filename"] == "exp-test.zip" and "exp-test/src/components/A.tsx" in wn
             assert (await c.call_tool("forge_ui_export", {"project": "exp-test", "path": "../etc/passwd"})).isError
             st = (await c.call_tool("forge_ui_state", {"project": "exp-test"})).structuredContent
-            assert st["sizes"]["src/components/A.tsx"] == 20 and st["version"] == "0.2.0"
+            assert st["sizes"]["src/components/A.tsx"] == 20 and st["version"] == __import__("forge_core").__version__
             hist = (await c.call_tool("forge_ui_history", {"project": "exp-test", "action": "list"})).structuredContent
             assert hist["entries"][0]["source"] == "ai"
     asyncio.run(go())
